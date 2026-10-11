@@ -1,3 +1,10 @@
+1.2.1	|	Release date: **11.10.2026**
+============================================
+* New Features:
+  - Add a Property into Server Handlers.
+  - Improve Websocket Logger.
+
+
 1.2.0	|	Release date: **11.10.2026**
 ============================================
 * New Features:
