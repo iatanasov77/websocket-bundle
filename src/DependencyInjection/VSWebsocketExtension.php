@@ -17,5 +17,8 @@ class VSWebsocketExtension extends Extension
         
         $container->setParameter( 'vs_websocket.document_root', $config['document_root'] );
         $container->setParameter( 'vs_websocket.exeption_trace', $config['exeption_trace'] );
+        
+        $container->setParameter( 'vs_websocket.logger.channel', $config['logger']['channel'] );
+        $container->setParameter( 'vs_websocket.logger.path', $config['logger']['path'] );
     }
 }

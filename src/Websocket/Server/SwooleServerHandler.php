@@ -29,6 +29,9 @@ class SwooleServerHandler implements SwooleServerHandlerInterface
     /** @var WebsocketClientFactory */
     protected $wsClientFactory;
     
+    /** @var int */
+    protected $connectionSequenceId;
+    
     /** @var SplObjectStorageAlias */
     protected $clients;
     
@@ -45,6 +48,7 @@ class SwooleServerHandler implements SwooleServerHandlerInterface
         $this->websocketUrl         = $websocketUrl;
         $this->wsClientFactory      = $wsClientFactory;
         
+        $this->connectionSequenceId = 0;
         $this->clients              = new SplObjectStorageAlias();
     }
     

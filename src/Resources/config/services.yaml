@@ -12,5 +12,6 @@ services:
         class: Vankosoft\WebsocketBundle\Logger\WebsocketLogger
         public: true
         arguments:
-            - '@monolog.logger.test_websocket'
+            - '%vs_websocket.logger.channel%'
+            - '%vs_websocket.logger.path%'
             - '%env(APP_ENV)%'

@@ -2,8 +2,8 @@ parameters:
     vs_websocket_ratchet_url: '%env(WEBSOCKET_RATCHET_TEST_URL)%'
     vs_websocket_swoole_url: '%env(WEBSOCKET_SWOOLE_TEST_URL)%'
     
-    vs_websocket.document_root: "%kernel.project_dir%/public"
-    vs_websocket.exeption_trace: "%env(bool:WEBSOCKET_EXCEPTION_TRACE)%"
+    vs_websocket.document_root: '%kernel.project_dir%/public'
+    vs_websocket.exeption_trace: '%env(bool:WEBSOCKET_EXCEPTION_TRACE)%'
 
 services:
     _defaults:

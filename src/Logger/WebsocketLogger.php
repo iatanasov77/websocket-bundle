@@ -1,8 +1,13 @@
 <?php namespace Vankosoft\WebsocketBundle\Logger;
 
 use Vankosoft\ApplicationBundle\Component\MyLoggerInterface;
-use Psr\Log\LoggerInterface;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Monolog\Level;
 
+/**
+ * Manual: https://www.dash0.com/guides/monolog-logging-php
+ */
 class WebsocketLogger implements MyLoggerInterface
 {
     /** @var LoggerInterface */
@@ -11,10 +16,12 @@ class WebsocketLogger implements MyLoggerInterface
     /** @var string */
     protected $environement;
     
-    public function __construct( LoggerInterface $logger, string $environement )
+    public function __construct( string $logChannel, string $logFile, string $environement )
     {
-        $this->logger       = $logger;
         $this->environement = $environement;
+        
+        $this->logger = new Logger( $logChannel );
+        $this->logger->pushHandler( new StreamHandler( $logFile, Level::Info ) );
     }
     
     public function log( string $logData, ?string $context = null ): void
