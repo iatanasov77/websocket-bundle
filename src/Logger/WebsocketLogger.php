@@ -1,10 +1,6 @@
 <?php namespace Vankosoft\WebsocketBundle\Logger;
 
 use Vankosoft\ApplicationBundle\Component\MyLoggerInterface;
-use Psr\Log\LoggerInterface;
-
-
-
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Monolog\Level;
@@ -20,16 +16,12 @@ class WebsocketLogger implements MyLoggerInterface
     /** @var string */
     protected $environement;
     
-    public function __construct( LoggerInterface $logger, string $environement )
+    public function __construct( string $logChannel, string $logFile, string $environement )
     {
         $this->environement = $environement;
-        // $this->logger       = $logger;
         
-        
-        $this->logger = new Logger( 'test_websocket' );
-        $this->logger->pushHandler(
-            new StreamHandler( '/dev/shm/game-platform.lh/game-platform/log/test_websocket.log', Level::Info )
-        );
+        $this->logger = new Logger( $logChannel );
+        $this->logger->pushHandler( new StreamHandler( $logFile, Level::Info ) );
     }
     
     public function log( string $logData, ?string $context = null ): void

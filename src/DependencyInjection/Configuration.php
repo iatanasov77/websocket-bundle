@@ -15,12 +15,13 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode( 'document_root' )
-                    ->defaultValue( '/public' )->cannotBeEmpty()
-                ->end()
-                
-                ->booleanNode( 'exeption_trace' )
-                    ->defaultFalse()
+                ->scalarNode( 'document_root' )->defaultValue( '/public' )->cannotBeEmpty()->end()
+                ->booleanNode( 'exeption_trace' )->defaultFalse()->end()
+                ->arrayNode( 'logger' )
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode( 'channel' )->defaultValue( 'test_websocket' )->cannotBeEmpty()->end()
+                        ->scalarNode( 'path' )->defaultValue( '%kernel.logs_dir%/test_websocket.log' )->cannotBeEmpty()->end()
                 ->end()
             ->end()
         ;
