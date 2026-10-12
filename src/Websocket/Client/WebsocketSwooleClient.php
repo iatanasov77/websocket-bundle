@@ -5,7 +5,8 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
 use Psr\Http\Message\UriInterface;
 
-use Swoole\Http\Client as SwooleClient;
+// use Swoole\Http\Client as SwooleClient;
+use Swoole\Coroutine\Http\Client as SwooleClient;
 use Swoole\WebSocket\Server as WebsocketServer;
 use Swoole\Http\Status as SwooleHttpStatus;
 
