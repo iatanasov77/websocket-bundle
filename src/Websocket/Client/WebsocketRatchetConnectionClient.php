@@ -29,7 +29,7 @@ final class WebsocketRatchetConnectionClient extends AbstractWebsocketClient
         return '';
     }
     
-    public function close( int $code ): void
+    public function close( ?int $code = null ): void
     {
         $this->connection->close( $code );
     }

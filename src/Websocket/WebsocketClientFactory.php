@@ -18,8 +18,6 @@ final class WebsocketClientFactory
     const AMPPHP_CLIENT     = 'amphp';
     const THRUWAY_CLIENT    = 'thruway';
     
-    
-    
     /** @var SerializerInterface */
     private $serializer;
     

@@ -3,40 +3,91 @@
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
-use Swoole\WebSocket\Server as WebsocketServer;
+use Psr\Http\Message\UriInterface;
 
+use Swoole\Http\Client as SwooleClient;
+use Swoole\WebSocket\Server as WebsocketServer;
+use Swoole\Http\Status as SwooleHttpStatus;
+
+use Vankosoft\WebsocketBundle\VSWebsocketException;
+use Vankosoft\WebsocketBundle\Psr\InvalidUrlException;
+use Vankosoft\WebsocketBundle\Psr\Uri;
+
+/**
+ * Manual: https://github.com/lessmore92/swoole-websocket-client/blob/main/src/WebSocketClient.php
+ */
 final class WebsocketSwooleClient extends AbstractWebsocketClient
 {
-    /** @var WebsocketServer */
+    /** @var WebsocketServer | SwooleClient */
     private $connection;
+    
+    /** @var UriInterface */
+    private $uri;
     
     public function __construct( string $websocketUrl, SerializerInterface $serializer, WebsocketServer $connection )
     {
         parent::__construct( $websocketUrl, $serializer );
         
-        $this->connection   = $connection;
+        // $this->connection   = $connection;
+        $this->connection = $this->createClient( $websocketUrl );
     }
     
-    public function send( object $msg ): void
+    public function send( object $msg, int $opcode = WEBSOCKET_OPCODE_TEXT, bool $finish = true ): void
     {
         // , [JsonEncode::OPTIONS => JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT]
         $json   = $this->serializer->serialize( $msg, JsonEncoder::FORMAT );
         
-        $this->connection->push( $this->clientId, $json );
+        // $this->connection->push( $this->clientId, $json );
+        $this->connection->push( $json, $opcode, $finish );
     }
     
-    public function receive(): string
+    public function close( ?int $code = null ): void
     {
-        return '';
+        $this->connection->close();
     }
     
-    public function close( int $code ): void
+    private function createClient( string $uri ): SwooleClient
     {
-        $this->connection->close( $code );
-    }
-    
-    public function subscribe( string $realm, string $topic, \Closure $callback ): void
-    {
+        if ( \is_string( $uri ) ) {
+            $this->uri = new Uri( $uri );
+        } else if ( \class_implements( $uri, UriInterface::class ) ) {
+            $this->uri = $uri;
+        } else {
+            throw new InvalidUrlException( 'Url must be a string or implemented UriInterface.' );
+        }
         
+        $host = $this->uri->getHost();
+        $port = $this->uri->getPort();
+        $ssl  = $this->uri->getScheme() === 'wss';
+        if ( empty( $host ) ) {
+            throw new InvalidUrlException( 'The WebSocket host should not be empty.' );
+        }
+        
+        if ( empty( $port ) ) {
+            $port = $ssl ? 443 : 80;
+        }
+        
+        $client = new SwooleClient( $host, $port, $ssl );
+        
+        \parse_str( $this->uri->getQuery(), $query );
+        $query = \http_build_query( $query );
+        
+        $path = $this->uri->getPath() ?: '/';
+        $path = empty( $query ) ? $path : $path . '?' . $query;
+        
+        $ret = $client->upgrade( $path );
+        if ( ! $ret) {
+            if ( $client->errCode !== 0 ) {
+                $errCode = $client->errCode;
+                $errMsg  = $client->errMsg;
+            } else {
+                $errCode = $client->statusCode;
+                $errMsg  = SwooleHttpStatus::getReasonPhrase( $errCode );
+            }
+            
+            throw new VSWebsocketException( 'Websocket upgrade failed by [' . $errMsg . '(' . $errCode . ')' . '].', $errCode );
+        }
+        
+        return $client;
     }
 }

@@ -36,7 +36,12 @@ abstract class AbstractWebsocketClient implements WebsocketClientInterface
         $this->State        = WebSocketState::None;
     }
     
-    public function close( int $code ): void
+    public function receive(): string
+    {
+        return '';
+    }
+    
+    public function close( ?int $code = null ): void
     {
         
     }
