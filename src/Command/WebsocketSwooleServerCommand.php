@@ -10,6 +10,7 @@ use Psr\Container\ContainerInterface;
 use Vankosoft\ApplicationBundle\Component\MyLoggerInterface;
 use Vankosoft\WebsocketBundle\Websocket\Server\SwooleServer;
 use Vankosoft\WebsocketBundle\Websocket\Server\SwooleServerHandlerInterface;
+use Vankosoft\WebsocketBundle\VSWebsocketException;
 
 #[AsCommand(
     name: 'vankosoft:swoole-websocket:server',
@@ -102,7 +103,7 @@ final class WebsocketSwooleServerCommand extends Command
         $this->serverHandler    = $this->container->get( $handler );
         $this->websocketLogger->log( "Swoole Websocket Server Handler: {$handler}"  );
         if ( ! ( $this->serverHandler instanceof SwooleServerHandlerInterface ) ) {
-            throw new \RuntimeException( 'Wrong Swoole Server Handler !!!' );
+            throw new VSWebsocketException( 'Wrong Swoole Server Handler !!!' );
         }
         
         $server = new SwooleServer( $this->websocketLogger, $options );

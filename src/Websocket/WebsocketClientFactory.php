@@ -9,6 +9,7 @@ use Vankosoft\WebsocketBundle\Websocket\Client\WebsocketSwooleClient;
 use Vankosoft\WebsocketBundle\Websocket\Client\WebsocketServerClient;
 use Vankosoft\WebsocketBundle\Websocket\Client\WebsocketThruwayClient;
 use Vankosoft\WebsocketBundle\Websocket\Client\WebsocketRatchetConnectionClient;
+use Vankosoft\WebsocketBundle\VSWebsocketException;
 
 final class WebsocketClientFactory
 {
@@ -44,7 +45,7 @@ final class WebsocketClientFactory
                 return $this->createThruwayClient( $url );
                 break;
             default:
-                throw new \RuntimeException( "Unknown Websocket Client: '{$clientType}' !" );
+                throw new VSWebsocketException( "Unknown Websocket Client: '{$clientType}' !" );
         }
     }
     
@@ -55,7 +56,7 @@ final class WebsocketClientFactory
     private function createSwooleClient( string $url, WebsocketServer $connection )
     {
         if ( ! \extension_loaded( 'swoole' ) && ! \class_exists( WebsocketServer::class ) ) {
-            throw new \RuntimeException( 'Swoole Websocket Client Cannot be Created !!!' );
+            throw new VSWebsocketException( 'Swoole Websocket Client Cannot be Created !!!' );
         }
         
         return new WebsocketSwooleClient( $url, $this->serializer, $connection );
@@ -68,7 +69,7 @@ final class WebsocketClientFactory
     private function createRatchetConnectionClient( string $url, RatchetConnectionInterface $connection )
     {
         if ( ! \interface_exists( RatchetConnectionInterface::class ) ) {
-            throw new \RuntimeException( 'Ratchet Websocket Client Cannot be Created !!!' );
+            throw new VSWebsocketException( 'Ratchet Websocket Client Cannot be Created !!!' );
         }
         
         return new WebsocketRatchetConnectionClient( $url, $this->serializer, $connection );
