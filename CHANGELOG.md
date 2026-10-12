@@ -1,3 +1,9 @@
+1.2.2	|	Release date: **12.10.2026**
+============================================
+* New Features:
+  - Add an Exception Class and Used for All Websocket Exceptions..
+
+
 1.2.1	|	Release date: **11.10.2026**
 ============================================
 * New Features:
