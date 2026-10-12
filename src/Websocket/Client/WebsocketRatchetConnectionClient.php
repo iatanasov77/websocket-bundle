@@ -24,18 +24,8 @@ final class WebsocketRatchetConnectionClient extends AbstractWebsocketClient
         $this->connection->send( $json );
     }
     
-    public function receive(): string
-    {
-        return '';
-    }
-    
     public function close( ?int $code = null ): void
     {
         $this->connection->close( $code );
-    }
-    
-    public function subscribe( string $realm, string $topic, \Closure $callback ): void
-    {
-        
     }
 }

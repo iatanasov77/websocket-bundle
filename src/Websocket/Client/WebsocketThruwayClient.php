@@ -34,9 +34,4 @@ final class WebsocketThruwayClient extends AbstractWebsocketClient
             
         $connection->open();
     }
-    
-    public function subscribe( string $realm, string $topic, \Closure $callback ): void
-    {
-        
-    }
 }

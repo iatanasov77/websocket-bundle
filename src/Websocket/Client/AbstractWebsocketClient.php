@@ -36,6 +36,11 @@ abstract class AbstractWebsocketClient implements WebsocketClientInterface
         $this->State        = WebSocketState::None;
     }
     
+    public function subscribe( string $realm, string $topic, \Closure $callback ): void
+    {
+        
+    }
+    
     public function receive(): string
     {
         return '';
