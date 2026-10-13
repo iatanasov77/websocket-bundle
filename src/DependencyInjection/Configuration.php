@@ -30,7 +30,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode( 'swoole' )
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->booleanNode( 'worker_num_calc' )->defaultFalse()->cannotBeEmpty()->end()
+                        ->booleanNode( 'worker_num_calc' )->defaultFalse()->end()
                         ->scalarNode( 'worker_num' )->defaultValue( 2 )->cannotBeEmpty()->end()
                     ->end()
                 ->end()
