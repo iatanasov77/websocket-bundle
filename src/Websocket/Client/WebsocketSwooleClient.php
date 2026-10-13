@@ -38,8 +38,8 @@ final class WebsocketSwooleClient extends AbstractWebsocketClient
         // , [JsonEncode::OPTIONS => JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT]
         $json   = $this->serializer->serialize( $msg, JsonEncoder::FORMAT );
         
-        // $this->connection->push( $this->clientId, $json );
-        $this->connection->push( $json, $opcode, $finish );
+        // $this->connection->push( $json, $opcode, $finish );
+        $this->connection->setData( $json );
     }
     
     public function close( ?int $code = null ): void
