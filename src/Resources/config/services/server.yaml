@@ -15,7 +15,9 @@ services:
         arguments:
             - '@service_container'
             - '@vs_websocket_logger'
-            - "%vs_websocket.document_root%"
+            - '%vs_websocket.document_root%'
+            - '%vs_websocket.swoole.worker_num_calc%'
+            - '%vs_websocket.swoole.worker_num%'
         tags:
             - 'console.command'
     
