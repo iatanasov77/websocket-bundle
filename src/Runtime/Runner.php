@@ -111,7 +111,7 @@ class Runner implements RunnerInterface
             $this->output->writeln( "Websocket is now listening in {$server->getServer()->host}:{$server->getServer()->port}" );
         });
 
-        $server->on( 'request', function (Request $request, Response $response ) use ( $server ) {
+        $server->on( 'request', function ( Request $request, Response $response ) use ( $server ) {
             $this->setRequest( $request, $response, $server->getServer() );
         });
 
