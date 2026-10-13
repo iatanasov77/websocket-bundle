@@ -8,6 +8,7 @@ use Psr\Http\Message\UriInterface;
 // use Swoole\Http\Client as SwooleClient;
 use Swoole\Coroutine\Http\Client as SwooleClient;
 use Swoole\WebSocket\Server as WebsocketServer;
+use Swoole\WebSocket\Frame as SwooleFrame;
 use Swoole\Http\Status as SwooleHttpStatus;
 
 use Vankosoft\WebsocketBundle\Websocket\WebSocketState;
@@ -20,8 +21,14 @@ use Vankosoft\WebsocketBundle\Psr\Uri;
  */
 final class WebsocketSwooleClient extends AbstractWebsocketClient
 {
-    /** @var WebsocketServer | SwooleClient */
+    /** @var WebsocketServer */
     private $connection;
+    
+    /** @var SwooleFrame */
+    private $frame;
+    
+    /** @var SwooleClient */
+    private $client;
     
     /** @var UriInterface */
     private $uri;
@@ -30,21 +37,26 @@ final class WebsocketSwooleClient extends AbstractWebsocketClient
     {
         parent::__construct( $websocketUrl, $serializer );
         
-        $this->connection = $this->createClient( $websocketUrl );
+        $this->connection   = $connection;
+        $this->client       = $this->createClient( $websocketUrl );
     }
     
-    public function send( object $msg, int $opcode = WEBSOCKET_OPCODE_TEXT, bool $finish = true ): void
+    public function send( object $msg ): void
     {
         // , [JsonEncode::OPTIONS => JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT]
         $json   = $this->serializer->serialize( $msg, JsonEncoder::FORMAT );
         
-        // $this->connection->push( $json, $opcode, $finish );
-        $this->connection->setData( $json );
+        $this->connection->push( $this->frame->fd, $json );
     }
     
     public function close( ?int $code = null ): void
     {
         // $this->connection->close();
+    }
+    
+    public function setFrame( SwooleFrame $frame ): void
+    {
+        $this->frame = $frame;
     }
     
     private function createClient( string $uri ): SwooleClient
