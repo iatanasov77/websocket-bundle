@@ -10,6 +10,7 @@ use Swoole\Coroutine\Http\Client as SwooleClient;
 use Swoole\WebSocket\Server as WebsocketServer;
 use Swoole\Http\Status as SwooleHttpStatus;
 
+use Vankosoft\WebsocketBundle\Websocket\WebSocketState;
 use Vankosoft\WebsocketBundle\VSWebsocketException;
 use Vankosoft\WebsocketBundle\Psr\InvalidUrlException;
 use Vankosoft\WebsocketBundle\Psr\Uri;
@@ -29,7 +30,6 @@ final class WebsocketSwooleClient extends AbstractWebsocketClient
     {
         parent::__construct( $websocketUrl, $serializer );
         
-        // $this->connection   = $connection;
         $this->connection = $this->createClient( $websocketUrl );
     }
     
@@ -44,7 +44,7 @@ final class WebsocketSwooleClient extends AbstractWebsocketClient
     
     public function close( ?int $code = null ): void
     {
-        $this->connection->close();
+        // $this->connection->close();
     }
     
     private function createClient( string $uri ): SwooleClient

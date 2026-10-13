@@ -60,7 +60,8 @@ class SwooleServerHandler implements SwooleServerHandlerInterface
     
     public function onOpen( WebsocketServer $server, Request $request ): void
     {
-        $this->logger->log( "Swoole Server Open Connection: {$request->fd}", 'WebsocketServer' );
+        $this->clients->attach( $server );
+        $this->logger->log( "Swoole Server Open Connection: {$server->worker_id}", 'WebsocketServer' );
     }
     
     public function onRequest( Request $request, Response $response ): void
@@ -90,11 +91,18 @@ class SwooleServerHandler implements SwooleServerHandlerInterface
         $webSocket->State   = WebSocketState::Open;
         
         $server->push( $frame->fd, \json_encode( ["hello", time()] ) );
+        
+        foreach ( $this->clients as $client ) {
+            if ( $from !== $client ) {
+                $client->send( "User {$frame->fd} says: {$frame->data}" );
+            }
+        }
     }
     
     public function onClose( WebsocketServer $server, int $fd ): void
     {
-        $this->logger->log( "Swoole Server Close Connection: {$fd}" );
+        $this->clients->detach( $server );
+        $this->logger->log( "Swoole Server Close Connection: {$server->worker_id}" );
     }
     
     public function onDisconnect( WebsocketServer $server, int $fd ): void
