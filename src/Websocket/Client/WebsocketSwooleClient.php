@@ -11,6 +11,7 @@ use Swoole\WebSocket\Server as WebsocketServer;
 use Swoole\WebSocket\Frame as SwooleFrame;
 use Swoole\Http\Status as SwooleHttpStatus;
 
+use Vankosoft\ApplicationBundle\Component\MyLoggerInterface;
 use Vankosoft\WebsocketBundle\Websocket\WebSocketState;
 use Vankosoft\WebsocketBundle\VSWebsocketException;
 use Vankosoft\WebsocketBundle\Psr\InvalidUrlException;

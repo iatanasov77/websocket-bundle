@@ -5,6 +5,8 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
 use Ratchet\ConnectionInterface;
 
+use Vankosoft\ApplicationBundle\Component\MyLoggerInterface;
+
 final class WebsocketRatchetConnectionClient extends AbstractWebsocketClient
 {
     /** @var ConnectionInterface */
