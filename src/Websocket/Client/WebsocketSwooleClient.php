@@ -33,9 +33,13 @@ final class WebsocketSwooleClient extends AbstractWebsocketClient
     /** @var UriInterface */
     private $uri;
     
-    public function __construct( string $websocketUrl, SerializerInterface $serializer, WebsocketServer $connection )
-    {
-        parent::__construct( $websocketUrl, $serializer );
+    public function __construct(
+        MyLoggerInterface $logger,
+        SerializerInterface $serializer,
+        string $websocketUrl,
+        WebsocketServer $connection
+    ) {
+        parent::__construct( $logger, $serializer, $websocketUrl );
         
         $this->connection   = $connection;
         $this->client       = $this->createClient( $websocketUrl );
@@ -52,6 +56,7 @@ final class WebsocketSwooleClient extends AbstractWebsocketClient
     public function close( int $code ): void
     {
         // $this->connection->close();
+        $this->client->close();
     }
     
     public function setFrame( SwooleFrame $frame ): void

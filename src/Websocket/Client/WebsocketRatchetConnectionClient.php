@@ -10,9 +10,13 @@ final class WebsocketRatchetConnectionClient extends AbstractWebsocketClient
     /** @var ConnectionInterface */
     private $connection;
     
-    public function __construct( string $websocketUrl, SerializerInterface $serializer, ConnectionInterface $connection )
-    {
-        parent::__construct( $websocketUrl, $serializer );
+    public function __construct(
+        MyLoggerInterface $logger,
+        SerializerInterface $serializer,
+        string $websocketUrl,
+        ConnectionInterface $connection
+    ) {
+        parent::__construct( $logger, $serializer, $websocketUrl );
         
         $this->connection   = $connection;
         $this->clientId     = $connection->resourceId;

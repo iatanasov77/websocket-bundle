@@ -1,6 +1,7 @@
 <?php namespace Vankosoft\WebsocketBundle\Websocket\Client;
 
 use Symfony\Component\Serializer\SerializerInterface;
+use Vankosoft\ApplicationBundle\Component\MyLoggerInterface;
 use Vankosoft\WebsocketBundle\Websocket\WebSocketState;
 
 /**
@@ -12,11 +13,14 @@ use Vankosoft\WebsocketBundle\Websocket\WebSocketState;
  */
 abstract class AbstractWebsocketClient implements WebsocketClientInterface
 {
-    /** @var string */
-    protected $websocketUrl;
+    /** @var MyLoggerInterface */
+    protected $logger;
     
     /** @var SerializerInterface */
     protected $serializer;
+    
+    /** @var string */
+    protected $websocketUrl;
     
     /**
      * Ratchet Connection Resource ID or Any Other Websocket Connection Identifier
@@ -28,11 +32,12 @@ abstract class AbstractWebsocketClient implements WebsocketClientInterface
     /** @var WebSocketState */
     public $State;
     
-    public function __construct( string $websocketUrl, SerializerInterface $serializer )
+    public function __construct( MyLoggerInterface $logger, SerializerInterface $serializer, string $websocketUrl )
     {
-        $this->websocketUrl = $websocketUrl;
+        $this->logger       = $logger;
         $this->serializer   = $serializer;
         
+        $this->websocketUrl = $websocketUrl;
         $this->State        = WebSocketState::None;
     }
     

@@ -4,6 +4,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Swoole\WebSocket\Server as WebsocketServer;
 use Ratchet\ConnectionInterface as RatchetConnectionInterface;
 
+use Vankosoft\ApplicationBundle\Component\MyLoggerInterface;
 use Vankosoft\WebsocketBundle\Websocket\Client\WebsocketClientInterface;
 use Vankosoft\WebsocketBundle\Websocket\Client\WebsocketSwooleClient;
 use Vankosoft\WebsocketBundle\Websocket\Client\WebsocketServerClient;
@@ -18,12 +19,17 @@ final class WebsocketClientFactory
     const AMPPHP_CLIENT     = 'amphp';
     const THRUWAY_CLIENT    = 'thruway';
     
+    /** @var MyLoggerInterface */
+    private $logger;
+    
     /** @var SerializerInterface */
     private $serializer;
     
     public function __construct(
+        MyLoggerInterface $logger,
         SerializerInterface $serializer,
     ) {
+        $this->logger       = $logger;
         $this->serializer   = $serializer;
     }
     
@@ -57,7 +63,12 @@ final class WebsocketClientFactory
             throw new VSWebsocketException( 'Swoole Websocket Client Cannot be Created !!!' );
         }
         
-        return new WebsocketSwooleClient( $url, $this->serializer, $connection );
+        return new WebsocketSwooleClient(
+            $this->logger,
+            $this->serializer,
+            $url,
+            $connection
+        );
     }
     
     /**
@@ -70,7 +81,12 @@ final class WebsocketClientFactory
             throw new VSWebsocketException( 'Ratchet Websocket Client Cannot be Created !!!' );
         }
         
-        return new WebsocketRatchetConnectionClient( $url, $this->serializer, $connection );
+        return new WebsocketRatchetConnectionClient(
+            $this->logger,
+            $this->serializer,
+            $url,
+            $connection
+        );
     }
     
     /**
@@ -79,7 +95,11 @@ final class WebsocketClientFactory
      */
     private function createAmpClient( string $url )
     {
-        return new WebsocketServerClient( $url, $this->serializer );
+        return new WebsocketServerClient(
+            $this->logger,
+            $this->serializer,
+            $url
+        );
     }
     
     /**
@@ -88,6 +108,10 @@ final class WebsocketClientFactory
      */
     private function createThruwayClient( string $url )
     {
-        return new WebsocketServerClient( $url, $this->serializer );
+        return new WebsocketServerClient(
+            $this->logger,
+            $this->serializer,
+            $url
+        );
     }
 }
