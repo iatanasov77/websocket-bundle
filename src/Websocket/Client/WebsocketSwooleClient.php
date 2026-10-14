@@ -49,7 +49,7 @@ final class WebsocketSwooleClient extends AbstractWebsocketClient
         $this->connection->push( $this->frame->fd, $json );
     }
     
-    public function close( ?int $code = null ): void
+    public function close( int $code ): void
     {
         // $this->connection->close();
     }

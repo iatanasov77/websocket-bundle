@@ -24,7 +24,10 @@ final class WebsocketRatchetConnectionClient extends AbstractWebsocketClient
         $this->connection->send( $json );
     }
     
-    public function close( ?int $code = null ): void
+    /**
+     * Available Codes In: Ratchet\RFC6455\Messaging\Frame
+     */
+    public function close( int $code ): void
     {
         $this->connection->close( $code );
     }

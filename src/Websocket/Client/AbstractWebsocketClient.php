@@ -46,7 +46,7 @@ abstract class AbstractWebsocketClient implements WebsocketClientInterface
         return '';
     }
     
-    public function close( ?int $code = null ): void
+    public function close( int $code ): void
     {
         
     }
