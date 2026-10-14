@@ -111,8 +111,8 @@ final class WebsocketRatchetServerCommand extends Command
         $host       = $input->getOption( 'host' );
         $port       = $input->getOption( 'port' );
         
-        $this->serverHandler    = new RatchetServer( $this->websocketLogger );
         $serverHandler          = $this->container->get( $handler );
+        $this->serverHandler    = new RatchetServer( $this->websocketLogger );
         $this->serverHandler->setHandler( $serverHandler );
         
         $loop           = EventLoopFactory::create();
