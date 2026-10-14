@@ -1,12 +1,11 @@
 <?php namespace Vankosoft\WebsocketBundle\Websocket\Server;
 
-use Ratchet\MessageComponentInterface;
 use Vankosoft\WebsocketBundle\Websocket\Connection\RatchetConnectionInterface;
 
 /**
  * Ported From Ratchet\MessageComponentInterface
  */
-interface RatchetServerHandlerInterface extends MessageComponentInterface
+interface RatchetServerHandlerInterface
 {
     /**
      * When a new connection is opened it will be passed to this method
