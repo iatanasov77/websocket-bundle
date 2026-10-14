@@ -31,7 +31,7 @@ class RatchetServer implements MessageComponentInterface
     
     public function onMessage( ConnectionInterface $from, $msg )
     {
-        $this->serverHandler->onMessage( $conn, $msg );
+        $this->serverHandler->onMessage( $from, $msg );
     }
     
     public function onClose( ConnectionInterface $conn )
