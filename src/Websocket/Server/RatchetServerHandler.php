@@ -55,7 +55,7 @@ class RatchetServerHandler implements RatchetServerHandlerInterface // MessageCo
         $this->clients              = new SplObjectStorageAlias();
     }
     
-    public function onOpen( RatchetConnectionInterface $conn )
+    public function onOpen( $conn )
     {
         $origin = isset( $headers['Origin'] ) ? $headers['Origin'] : '';
         if ( $origin !== '' && $origin !== 'http://localhost' ) {
@@ -65,7 +65,7 @@ class RatchetServerHandler implements RatchetServerHandlerInterface // MessageCo
         echo "New connection: ({$conn->resourceId})\n";
     }
     
-    public function onMessage( RatchetConnectionInterface $from, $msg )
+    public function onMessage( $from, $msg )
     {
         if ( \is_string( $msg ) ) {
             $response = $msg;
@@ -81,13 +81,13 @@ class RatchetServerHandler implements RatchetServerHandlerInterface // MessageCo
         }
     }
     
-    public function onClose( RatchetConnectionInterface $conn )
+    public function onClose( $conn )
     {
         $this->clients->detach( $conn );
         echo "Connection {$conn->resourceId} closed\n";
     }
     
-    public function onError( RatchetConnectionInterface $conn, \Exception $e )
+    public function onError( $conn, \Exception $e )
     {
         echo "Error: {$e->getMessage()}\n";
         $conn->close( Frame::CLOSE_SRV_ERR );

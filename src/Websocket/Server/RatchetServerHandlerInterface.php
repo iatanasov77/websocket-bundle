@@ -12,14 +12,14 @@ interface RatchetServerHandlerInterface
      * @param  RatchetConnectionInterface $conn The socket/connection that just connected to your application
      * @throws \Exception
      */
-    function onOpen( RatchetConnectionInterface $conn );
+    function onOpen( $conn );
     
     /**
      * This is called before or after a socket is closed (depends on how it's closed).  SendMessage to $conn will not result in an error if it has already been closed.
      * @param  RatchetConnectionInterface $conn The socket/connection that is closing/closed
      * @throws \Exception
      */
-    function onClose( RatchetConnectionInterface $conn );
+    function onClose( $conn );
     
     /**
      * If there is an error with one of the sockets, or somewhere in the application where an Exception is thrown,
@@ -28,7 +28,7 @@ interface RatchetServerHandlerInterface
      * @param  \Exception          $e
      * @throws \Exception
      */
-    function onError( RatchetConnectionInterface $conn, \Exception $e );
+    function onError( $conn, \Exception $e );
     
     /**
      * Triggered when a client sends data through the socket
@@ -36,5 +36,5 @@ interface RatchetServerHandlerInterface
      * @param  string                       $msg  The message received
      * @throws \Exception
      */
-    function onMessage( RatchetConnectionInterface $from, $msg );
+    function onMessage( $from, $msg );
 }
