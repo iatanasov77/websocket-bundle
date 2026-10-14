@@ -9,6 +9,7 @@ use Ratchet\ConnectionInterface;
 use Vankosoft\ApplicationBundle\Component\MyLoggerInterface;
 use Vankosoft\WebsocketBundle\Websocket\WebsocketClientFactory;
 use Vankosoft\WebsocketBundle\Websocket\WebSocketState;
+use Vankosoft\WebsocketBundle\Websocket\Message\Frame;
 
 /**
  * Manual: https://gaurangdangi.medium.com/building-a-web-socket-server-in-laravel-with-ratchet-ff2f10385d03
@@ -57,7 +58,7 @@ class RatchetServerHandler implements MessageComponentInterface
     {
         $origin = isset( $headers['Origin'] ) ? $headers['Origin'] : '';
         if ( $origin !== '' && $origin !== 'http://localhost' ) {
-            $conn->close();
+            $conn->close( Frame::CLOSE_SRV_ERR );
         }
         $this->clients->attach( $conn );
         echo "New connection: ({$conn->resourceId})\n";
@@ -88,6 +89,6 @@ class RatchetServerHandler implements MessageComponentInterface
     public function onError( ConnectionInterface $conn, \Exception $e )
     {
         echo "Error: {$e->getMessage()}\n";
-        $conn->close();
+        $conn->close( Frame::CLOSE_SRV_ERR );
     }
 }
