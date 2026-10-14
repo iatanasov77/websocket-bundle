@@ -7,6 +7,7 @@ use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 
 use Vankosoft\ApplicationBundle\Component\MyLoggerInterface;
+use Vankosoft\WebsocketBundle\Websocket\Connection\RatchetConnectionInterface;
 use Vankosoft\WebsocketBundle\Websocket\WebsocketClientFactory;
 use Vankosoft\WebsocketBundle\Websocket\WebSocketState;
 use Vankosoft\WebsocketBundle\Websocket\Message\Frame;
@@ -54,7 +55,7 @@ class RatchetServerHandler implements MessageComponentInterface
         $this->clients              = new SplObjectStorageAlias();
     }
     
-    public function onOpen( ConnectionInterface $conn )
+    public function onOpen( RatchetConnectionInterface $conn )
     {
         $origin = isset( $headers['Origin'] ) ? $headers['Origin'] : '';
         if ( $origin !== '' && $origin !== 'http://localhost' ) {
@@ -64,7 +65,7 @@ class RatchetServerHandler implements MessageComponentInterface
         echo "New connection: ({$conn->resourceId})\n";
     }
     
-    public function onMessage( ConnectionInterface $from, $msg )
+    public function onMessage( RatchetConnectionInterface $from, $msg )
     {
         if ( \is_string( $msg ) ) {
             $response = $msg;
@@ -80,13 +81,13 @@ class RatchetServerHandler implements MessageComponentInterface
         }
     }
     
-    public function onClose( ConnectionInterface $conn )
+    public function onClose( RatchetConnectionInterface $conn )
     {
         $this->clients->detach( $conn );
         echo "Connection {$conn->resourceId} closed\n";
     }
     
-    public function onError( ConnectionInterface $conn, \Exception $e )
+    public function onError( RatchetConnectionInterface $conn, \Exception $e )
     {
         echo "Error: {$e->getMessage()}\n";
         $conn->close( Frame::CLOSE_SRV_ERR );
