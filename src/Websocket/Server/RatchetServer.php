@@ -2,9 +2,13 @@
 
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
+use Vankosoft\ApplicationBundle\Component\MyLoggerInterface;
 
 class RatchetServer implements MessageComponentInterface
 {
+    /** @var MyLoggerInterface */
+    protected $logger;
+    
     /** @var RatchetServerHandlerInterface */
     protected ?RatchetServerHandlerInterface $serverHandler;
     
