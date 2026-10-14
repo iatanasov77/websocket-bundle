@@ -35,7 +35,7 @@ class SwooleServer
     /** @var WebsocketServer | null */
     protected ?WebsocketServer $server;
     
-    /** @var ServerHandlerInterface */
+    /** @var SwooleServerHandlerInterface */
     protected ?SwooleServerHandlerInterface $serverHandler;
     
     /** @var bool */
