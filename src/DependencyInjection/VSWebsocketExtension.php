@@ -20,5 +20,8 @@ class VSWebsocketExtension extends Extension
         
         $container->setParameter( 'vs_websocket.logger.channel', $config['logger']['channel'] );
         $container->setParameter( 'vs_websocket.logger.path', $config['logger']['path'] );
+        
+        $container->setParameter( 'vs_websocket.swoole.worker_num_calc', $config['swoole']['worker_num_calc'] );
+        $container->setParameter( 'vs_websocket.swoole.worker_num', $config['swoole']['worker_num'] );
     }
 }

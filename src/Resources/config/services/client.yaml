@@ -7,4 +7,5 @@ services:
         class: Vankosoft\WebsocketBundle\Websocket\WebsocketClientFactory
         public: true
         arguments:
+            - '@vs_websocket_logger'
             - '@serializer'

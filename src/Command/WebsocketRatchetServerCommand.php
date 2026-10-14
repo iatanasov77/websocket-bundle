@@ -18,6 +18,7 @@ use React\EventLoop\Factory as EventLoopFactory;
 use React\Socket\SocketServer;
 
 use Vankosoft\ApplicationBundle\Component\MyLoggerInterface;
+use Vankosoft\WebsocketBundle\Websocket\Server\RatchetServer;
 
 /**
  * See Logs:        sudo tail -f /dev/shm/game-platform.lh/game-platform/log/websocket_game.log
@@ -110,7 +111,9 @@ final class WebsocketRatchetServerCommand extends Command
         $host       = $input->getOption( 'host' );
         $port       = $input->getOption( 'port' );
         
-        $this->serverHandler = $this->container->get( $handler );
+        $serverHandler          = $this->container->get( $handler );
+        $this->serverHandler    = new RatchetServer( $this->websocketLogger );
+        $this->serverHandler->setHandler( $serverHandler );
         
         $loop           = EventLoopFactory::create();
         $socketServer   = new SocketServer( "{$host}:{$port}", [

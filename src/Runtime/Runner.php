@@ -106,12 +106,12 @@ class Runner implements RunnerInterface
             $this->kernel->getContainer()->set( 'websocket.server', $server );
             $server->setEventDispatcher( $this->getKernelEventDispatcher() );
         });
-
+        
         $server->on( 'Start', function () use ( $server ) {
             $this->output->writeln( "Websocket is now listening in {$server->getServer()->host}:{$server->getServer()->port}" );
         });
-
-        $server->on( 'request', function (Request $request, Response $response ) use ( $server ) {
+        
+        $server->on( 'request', function ( Request $request, Response $response ) use ( $server ) {
             $this->setRequest( $request, $response, $server->getServer() );
         });
 

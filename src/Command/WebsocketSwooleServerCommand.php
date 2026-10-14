@@ -28,6 +28,12 @@ final class WebsocketSwooleServerCommand extends Command
     /** @var string */
     private $documentRoot;
     
+    /** @var bool */
+    private $workerNumCalc;
+    
+    /** @var int */
+    private $workerNum;
+    
     /** @var array */
     private $runtimeOption = [
         // 'socketio' => true,
@@ -43,7 +49,9 @@ final class WebsocketSwooleServerCommand extends Command
     public function __construct(
         ContainerInterface $container,
         MyLoggerInterface $websocketLogger,
-        string $documentRoot
+        string $documentRoot,
+        bool $workerNumCalc,
+        int $workerNum
     ) {
         parent::__construct();
         
@@ -52,7 +60,10 @@ final class WebsocketSwooleServerCommand extends Command
         $this->websocketLogger  = $websocketLogger;
         $this->documentRoot     = $documentRoot;
         
-        $workerNum = \swoole_cpu_num() * 2;
+        if ( $workerNumCalc ) {
+            $workerNum = \swoole_cpu_num() * $workerNum;
+        }
+        
         $this->runtimeOption['settings'] = [
             \Swoole\Constant::OPTION_WORKER_NUM => $workerNum,
             \Swoole\Constant::OPTION_ENABLE_STATIC_HANDLER => true,

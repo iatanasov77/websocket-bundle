@@ -13,6 +13,7 @@ use Vankosoft\ApplicationBundle\Component\MyLoggerInterface;
 
 use Vankosoft\WebsocketBundle\Event\StartEvent;
 use Vankosoft\WebsocketBundle\Event\OpenEvent;
+use Vankosoft\WebsocketBundle\Event\RequestEvent;
 use Vankosoft\WebsocketBundle\Event\MessageEvent;
 use Vankosoft\WebsocketBundle\Event\CloseEvent;
 use Vankosoft\WebsocketBundle\Event\DisconnectEvent;
@@ -34,7 +35,7 @@ class SwooleServer
     /** @var WebsocketServer | null */
     protected ?WebsocketServer $server;
     
-    /** @var ServerHandlerInterface */
+    /** @var SwooleServerHandlerInterface */
     protected ?SwooleServerHandlerInterface $serverHandler;
     
     /** @var bool */
@@ -81,6 +82,7 @@ class SwooleServer
     {
         $this->server->on( StartEvent::NAME, [$this->serverHandler, 'onStart'] );
         $this->server->on( OpenEvent::NAME, [$this->serverHandler, 'onOpen'] );
+        $this->server->on( RequestEvent::NAME, [$this->serverHandler, 'onRequest'] );
         $this->server->on( MessageEvent::NAME, [$this->serverHandler, 'onMessage'] );
         $this->server->on( CloseEvent::NAME, [$this->serverHandler, 'onClose'] );
         $this->server->on( DisconnectEvent::NAME, [$this->serverHandler, 'onDisconnect'] );

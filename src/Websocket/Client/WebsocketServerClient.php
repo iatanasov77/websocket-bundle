@@ -25,14 +25,4 @@ final class WebsocketServerClient extends AbstractWebsocketClient
         
         $client->close();
     }
-    
-    public function receive(): string
-    {
-        return '';
-    }
-    
-    public function subscribe( string $realm, string $topic, \Closure $callback ): void
-    {
-        
-    }
 }
