@@ -15,7 +15,7 @@ use Vankosoft\WebsocketBundle\Websocket\Message\Frame;
 /**
  * Manual: https://gaurangdangi.medium.com/building-a-web-socket-server-in-laravel-with-ratchet-ff2f10385d03
  */
-class RatchetServerHandler implements MessageComponentInterface
+class RatchetServerHandler implements RatchetServerHandlerInterface // MessageComponentInterface
 {
     /** @var MyLoggerInterface */
     protected $logger;
