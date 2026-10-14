@@ -1,3 +1,15 @@
+1.2.3	|	Release date: **15.10.2026**
+============================================
+* New Features:
+  - Create a Swoole Client.
+  - Refactoring Websocket Clients.
+  - Add a On Request Event for Swoole Server Handlers.
+  - Add Swoole Server Workers in Configuration.
+  - Add Constants for Websocket Clients.
+  - Refactoring Websocket Clients and Add a Logger into Client Objects.
+  - Create a Websocket Connection Interfaces.
+
+
 1.2.2	|	Release date: **12.10.2026**
 ============================================
 * New Features:
