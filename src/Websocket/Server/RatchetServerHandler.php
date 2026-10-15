@@ -3,9 +3,9 @@
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use SplObjectStorage as SplObjectStorageAlias;
+use Ratchet\ConnectionInterface;
 
 use Vankosoft\ApplicationBundle\Component\MyLoggerInterface;
-use Vankosoft\WebsocketBundle\Websocket\Connection\RatchetConnectionInterface;
 use Vankosoft\WebsocketBundle\Websocket\WebsocketClientFactory;
 use Vankosoft\WebsocketBundle\Websocket\WebSocketState;
 use Vankosoft\WebsocketBundle\Websocket\Message\Frame;
@@ -53,7 +53,7 @@ class RatchetServerHandler implements RatchetServerHandlerInterface
         $this->clients              = new SplObjectStorageAlias();
     }
     
-    public function onOpen( $conn )
+    public function onOpen( ConnectionInterface $conn ): void
     {
         $origin = isset( $headers['Origin'] ) ? $headers['Origin'] : '';
         if ( $origin !== '' && $origin !== 'http://localhost' ) {
@@ -63,7 +63,7 @@ class RatchetServerHandler implements RatchetServerHandlerInterface
         echo "New connection: ({$conn->resourceId})\n";
     }
     
-    public function onMessage( $from, $msg )
+    public function onMessage( ConnectionInterface $from, $msg ): void
     {
         if ( \is_string( $msg ) ) {
             $response = $msg;
@@ -79,13 +79,13 @@ class RatchetServerHandler implements RatchetServerHandlerInterface
         }
     }
     
-    public function onClose( $conn )
+    public function onClose( ConnectionInterface $conn ): void
     {
         $this->clients->detach( $conn );
         echo "Connection {$conn->resourceId} closed\n";
     }
     
-    public function onError( $conn, \Exception $e )
+    public function onError( ConnectionInterface $conn, \Exception $e ): void
     {
         echo "Error: {$e->getMessage()}\n";
         $conn->close( Frame::CLOSE_SRV_ERR );
