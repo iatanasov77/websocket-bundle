@@ -14,7 +14,8 @@ use Ratchet\Server\IoServer;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
 use Ratchet\MessageComponentInterface;
-use React\EventLoop\Factory as EventLoopFactory;
+//use React\EventLoop\Factory as EventLoopFactory;
+use React\EventLoop\Loop;
 use React\Socket\SocketServer;
 
 use Vankosoft\ApplicationBundle\Component\MyLoggerInterface;
@@ -115,7 +116,8 @@ final class WebsocketRatchetServerCommand extends Command
         $this->serverHandler    = new RatchetServer( $this->websocketLogger );
         $this->serverHandler->setHandler( $serverHandler );
         
-        $loop           = EventLoopFactory::create();
+        //$loop           = EventLoopFactory::create();
+        $loop           = Loop::get();
         $socketServer   = new SocketServer( "{$host}:{$port}", [
             'local_cert'        => $this->parrameters['sslCertificateCert'],
             'local_pk'          => $this->parrameters['sslCertificateKey'],
