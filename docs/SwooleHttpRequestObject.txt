@@ -1,0 +1,52 @@
+Swoole\Http\Request Object (
+    [fd] => 1
+    [streamId] => 0
+    [header] => Array (
+        [host] => game-platform.lh:8094
+        [pragma] => no-cache
+        [cache-control] => no-cache
+        [user-agent] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36
+        [origin] => https://game-platform.lh
+        [sec-websocket-version] => 13
+        [accept-encoding] => gzip, deflate, br, zstd
+        [accept-language] => en-US,en;q=0.9
+        [sec-websocket-key] => ADgTuAeAvA9uLzeLF0+Rvg==
+        [sec-websocket-extensions] => permessage-deflate; client_max_window_bits
+        [via] => 1.1 game-platform.lh
+        [x-forwarded-for] => 10.3.3.1
+        [x-forwarded-host] => game-platform.lh
+        [x-forwarded-server] => game-platform.lh
+        [upgrade] => WebSocket
+        [connection] => Upgrade
+    )
+    [server] => Array (
+        [query_string] => token=hVFxaK2yZ08hvM3fXAgF&gameCode=backgammon&userId=1&gameId=&playAi=false&forGold=true&gameVariant=normal
+        [request_method] => GET
+        [request_uri] => /:8094/
+        [path_info] => /:8094/
+        [request_time] => 1791855304
+        [request_time_float] => 1791855304.5857
+        [server_protocol] => HTTP/1.1
+        [server_port] => 8094
+        [remote_port] => 50680
+        [server_addr] => 10.3.3.2
+        [remote_addr] => 10.3.3.2
+        [master_time] => 1791855304
+    )
+    [cookie] => Array (
+        [main_auth_profile_token] => d5513f
+        [PHPSESSID] => 4564b064e055d0015142adc9137908ae
+    )
+    [get] => Array (
+        [token] => hVFxaK2yZ08hvM3fXAgF
+        [gameCode] => backgammon
+        [userId] => 1
+        [gameId] =>
+        [playAi] => false
+        [forGold] => true
+        [gameVariant] => normal
+    )
+    [files] =>
+    [post] =>
+    [tmpfiles] =>
+)
