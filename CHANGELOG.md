@@ -1,3 +1,11 @@
+1.3.0	|	Release date: **15.10.2026**
+============================================
+* New Features:
+  - Fix Ratchet Server.
+  - Improve Ratchet Server Handler.
+  - Add Documentaions.
+
+
 1.2.3	|	Release date: **15.10.2026**
 ============================================
 * New Features:
