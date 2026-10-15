@@ -3,8 +3,6 @@
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use SplObjectStorage as SplObjectStorageAlias;
-use Ratchet\MessageComponentInterface;
-use Ratchet\ConnectionInterface;
 
 use Vankosoft\ApplicationBundle\Component\MyLoggerInterface;
 use Vankosoft\WebsocketBundle\Websocket\Connection\RatchetConnectionInterface;
@@ -15,7 +13,7 @@ use Vankosoft\WebsocketBundle\Websocket\Message\Frame;
 /**
  * Manual: https://gaurangdangi.medium.com/building-a-web-socket-server-in-laravel-with-ratchet-ff2f10385d03
  */
-class RatchetServerHandler implements RatchetServerHandlerInterface // MessageComponentInterface
+class RatchetServerHandler implements RatchetServerHandlerInterface
 {
     /** @var MyLoggerInterface */
     protected $logger;
