@@ -14,6 +14,9 @@ use Vankosoft\WebsocketBundle\Websocket\WebsocketClientFactory;
 use Vankosoft\WebsocketBundle\Websocket\WebSocketState;
 use Vankosoft\WebsocketBundle\Websocket\Client\WebsocketClientInterface;
 
+/**
+ * Manual: https://websocket.org/guides/languages/php/
+ */
 class SwooleServerHandler implements SwooleServerHandlerInterface
 {
     /** @var MyLoggerInterface */
