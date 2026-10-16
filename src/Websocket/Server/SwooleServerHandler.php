@@ -12,6 +12,7 @@ use Swoole\WebSocket\Server as WebsocketServer;
 use Vankosoft\ApplicationBundle\Component\MyLoggerInterface;
 use Vankosoft\WebsocketBundle\Websocket\WebsocketClientFactory;
 use Vankosoft\WebsocketBundle\Websocket\WebSocketState;
+use Vankosoft\WebsocketBundle\Websocket\Client\WebsocketClientInterface;
 
 class SwooleServerHandler implements SwooleServerHandlerInterface
 {
@@ -35,6 +36,9 @@ class SwooleServerHandler implements SwooleServerHandlerInterface
     
     /** @var SplObjectStorageAlias */
     protected $clients;
+    
+    /** @var WebsocketClientInterface */
+    protected $socket;
     
     public function __construct(
         MyLoggerInterface $logger,
@@ -60,8 +64,20 @@ class SwooleServerHandler implements SwooleServerHandlerInterface
     
     public function onOpen( WebsocketServer $server, Request $request ): void
     {
-        $this->clients->attach( $server );
         $this->logger->log( "Swoole Server Open Connection: {$server->worker_id}", 'WebsocketServer' );
+        $this->connectionSequenceId++;
+        
+        // Store the new connection to send messages to later
+        $this->clients->offsetSet( $server, $this->connectionSequenceId );
+        
+        $this->socket   = $this->wsClientFactory->createClient( WebsocketClientFactory::SWOOLE_CLIENT, $this->websocketUrl, $server );
+        $this->socket->setClientId( $this->connectionSequenceId );
+        $this->socket->State   = WebSocketState::Open;
+        
+        $server->push( $request->fd, json_encode([
+            'type' => 'welcome',
+            'fd' => $request->fd
+        ]));
     }
     
     public function onRequest( Request $request, Response $response ): void
@@ -87,16 +103,7 @@ class SwooleServerHandler implements SwooleServerHandlerInterface
     {
         $this->logger->log( "Swoole Server Call Subscriber onMessage: {$frame->data}" );
         
-        $webSocket  = $this->wsClientFactory->createClient( WebsocketClientFactory::SWOOLE_CLIENT, $this->websocketUrl, $server );
-        $webSocket->State   = WebSocketState::Open;
-        
-        $server->push( $frame->fd, \json_encode( ["hello", time()] ) );
-        
-        foreach ( $this->clients as $client ) {
-            if ( $from !== $client ) {
-                $client->send( "User {$frame->fd} says: {$frame->data}" );
-            }
-        }
+        $this->socket->send( ["hello", time()] );
     }
     
     public function onClose( WebsocketServer $server, int $fd ): void
