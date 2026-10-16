@@ -47,7 +47,8 @@ final class WebsocketSwooleClient extends AbstractWebsocketClient
     
     public function close( int $code ): void
     {
+        // echo "Connection closed: {$fd}\n";
+        
         // $this->connection->close();
-        $this->client->close();
     }
 }
