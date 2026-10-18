@@ -2,15 +2,7 @@
 
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
-
-use GuzzleHttp\Psr7\Message;
-use GuzzleHttp\Psr7\Response;
-
-// use Swoole\Http\Client as SwooleClient;
-use Swoole\Coroutine\Http\Client as SwooleClient;
 use Swoole\WebSocket\Server as WebsocketServer;
-use Swoole\WebSocket\Frame as SwooleFrame;
-use Swoole\Http\Status as SwooleHttpStatus;
 
 use Vankosoft\ApplicationBundle\Component\MyLoggerInterface;
 use Vankosoft\WebsocketBundle\Websocket\Message\Frame;
