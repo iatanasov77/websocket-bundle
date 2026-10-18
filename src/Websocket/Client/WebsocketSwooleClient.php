@@ -52,7 +52,6 @@ final class WebsocketSwooleClient extends AbstractWebsocketClient
     {
         // echo "Connection closed: {$fd}\n";
         
-        $code = 400;
         $additional_headers = [];
         $response = new Response( $code, \array_merge( [
                 'X-Powered-By' => 'VsWebsocket/1.3.0'
