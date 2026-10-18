@@ -39,7 +39,7 @@ trait ReactMoveTimeOut
     
     public function ReactAsync( callable $function ): callable
     {
-        $promise = Async\async( $function )();
+        $promise = Async\async( $function );
         
         return $promise;
     }
