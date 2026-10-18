@@ -5,6 +5,8 @@ use React\EventLoop\Loop;
 use React\EventLoop\TimerInterface;
 use Amp\DeferredCancellation;
 
+use Vankosoft\WebsocketBundle\Websocket\Client\WebsocketClientInterface;
+
 trait ReactMoveTimeOut
 {
     /**
@@ -37,9 +39,17 @@ trait ReactMoveTimeOut
         Async\await( $promise );
     }
     
-    public function ReactAsync( callable $function ): callable
+    public function setReactNewTurn( WebsocketClientInterface $socket ): void
     {
-        $promise = Async\async( $function );
+        $promise = $this->ReactAsync( [$this, 'NewTurn'] );
+        Async\await( $promise );
+    }
+    
+    public function ReactAsync( callable $function, $args = [] ): callable
+    {
+        $promise = Async\async( function () use ( $function, $args ) {
+            \call_user_func( $function, $args );
+        })();
         
         return $promise;
     }
