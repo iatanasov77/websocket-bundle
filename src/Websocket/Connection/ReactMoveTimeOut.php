@@ -30,4 +30,17 @@ trait ReactMoveTimeOut
             })();
         }
     }
+    
+    public function setReactConnectAiOpponent(): void
+    {
+        $promise = $this->ReactAsync( [$this, 'ConnectAiOpponent'] );
+        Async\await( $promise );
+    }
+    
+    public function ReactAsync( callable $function ): callable
+    {
+        $promise = Async\async( $function )();
+        
+        return $promise;
+    }
 }
