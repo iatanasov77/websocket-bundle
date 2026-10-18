@@ -13,10 +13,7 @@ use Swoole\WebSocket\Frame as SwooleFrame;
 use Swoole\Http\Status as SwooleHttpStatus;
 
 use Vankosoft\ApplicationBundle\Component\MyLoggerInterface;
-use Vankosoft\WebsocketBundle\Websocket\WebSocketState;
-use Vankosoft\WebsocketBundle\VSWebsocketException;
-use Vankosoft\WebsocketBundle\Psr\InvalidUrlException;
-use Vankosoft\WebsocketBundle\Psr\Uri;
+use Vankosoft\WebsocketBundle\Websocket\Message\Frame;
 
 /**
  * Manual: https://github.com/lessmore92/swoole-websocket-client/blob/main/src/WebSocketClient.php
@@ -48,18 +45,24 @@ final class WebsocketSwooleClient extends AbstractWebsocketClient
         }
     }
     
+    /**
+     * Разликата между disconnect() и close()
+     * =======================================
+     * • $server->disconnect($fd, $code, $reason): Провежда правилната процедура по затваряне на WebSocket (Websocket handshake close). Браузърът ще прихване събитието в ws.onclose с подадения от вас код и съобщение.
+     * • $server->close($fd): Грубо затваряне на TCP сокета на по-ниско ниво. Клиентът просто ще отчете, че връзката е прекъсната (често с код 1006 - Abnormal Closure), без да разбере конкретната причина.
+     *
+     */
     public function close( int $code ): void
     {
-        // echo "Connection closed: {$fd}\n";
-        
-        $additional_headers = [];
-        $response = new Response( $code, \array_merge( [
-                'X-Powered-By' => 'VsWebsocket/1.3.0'
-            ],
-            $additional_headers
-        ) );
-        
-        $this->connection->send( Message::toString( $response ) );
-        // $this->connection->close(); 
+        foreach ( $this->connection->connections as $fd ) {
+            if ( $this->connection->isEstablished( $fd ) ) {
+                // Примерно условие: ако клиентът изпрати "kickme", го изключваме
+                if ( $code === Frame::CLOSE_NORMAL ) {
+                    // 1000 е стандартен статус код за нормално затваряне (Normal Closure)
+                    $this->connection->disconnect( $fd, $code, "Ти поиска да бъдеш изключен." );
+                    return;
+                }
+            }
+        }
     }
 }
