@@ -42,11 +42,11 @@ trait ReactFunctions
     
     public function setReactNewTurn( WebsocketClientInterface $socket ): void
     {
-        $promise = $this->ReactAsync( [$this, 'NewTurn'] );
+        $promise = $this->ReactAsync( [$this, 'NewTurn'], $socket );
         Async\await( $promise );
     }
     
-    public function ReactAsync( callable $function, $args = [] ): Promise
+    public function ReactAsync( callable $function, ...$args ): Promise
     {
         $promise = Async\async( function () use ( $function, $args ) {
             \call_user_func( $function, $args );
