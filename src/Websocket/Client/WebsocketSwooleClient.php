@@ -37,7 +37,6 @@ final class WebsocketSwooleClient extends AbstractWebsocketClient
     public function send( object $msg ): void
     {
         $json   = $this->serializer->serialize( $msg, JsonEncoder::FORMAT );
-        
         foreach ( $this->connection->connections as $fd ) {
             if ( $this->connection->isEstablished( $fd ) ) {
                 $this->connection->push( $fd, $json );
@@ -54,6 +53,8 @@ final class WebsocketSwooleClient extends AbstractWebsocketClient
      */
     public function close( int $code ): void
     {
+        $this->logger->log( "Swoole Server Call Close: Code {$code}" );
+        
         foreach ( $this->connection->connections as $fd ) {
             if ( $this->connection->isEstablished( $fd ) ) {
                 // Примерно условие: ако клиентът изпрати "kickme", го изключваме
