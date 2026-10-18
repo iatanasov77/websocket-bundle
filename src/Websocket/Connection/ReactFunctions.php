@@ -8,7 +8,7 @@ use Amp\DeferredCancellation;
 
 use Vankosoft\WebsocketBundle\Websocket\Client\WebsocketClientInterface;
 
-trait ReactMoveTimeOut
+trait ReactFunctions
 {
     /**
      * CancellationTokenSource has been renamed to DeferredCancellation in AMPHP Version 3.0.0
