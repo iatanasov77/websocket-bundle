@@ -3,6 +3,7 @@
 use React\Async;
 use React\EventLoop\Loop;
 use React\EventLoop\TimerInterface;
+use React\Promise\Promise;
 use Amp\DeferredCancellation;
 
 use Vankosoft\WebsocketBundle\Websocket\Client\WebsocketClientInterface;
@@ -45,7 +46,7 @@ trait ReactMoveTimeOut
         Async\await( $promise );
     }
     
-    public function ReactAsync( callable $function, $args = [] ): callable
+    public function ReactAsync( callable $function, $args = [] ): Promise
     {
         $promise = Async\async( function () use ( $function, $args ) {
             \call_user_func( $function, $args );
