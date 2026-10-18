@@ -3,6 +3,9 @@
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
+use GuzzleHttp\Psr7\Message;
+use GuzzleHttp\Psr7\Response;
+
 // use Swoole\Http\Client as SwooleClient;
 use Swoole\Coroutine\Http\Client as SwooleClient;
 use Swoole\WebSocket\Server as WebsocketServer;
@@ -49,6 +52,15 @@ final class WebsocketSwooleClient extends AbstractWebsocketClient
     {
         // echo "Connection closed: {$fd}\n";
         
-        // $this->connection->close();
+        $code = 400;
+        $additional_headers = [];
+        $response = new Response( $code, \array_merge( [
+                'X-Powered-By' => 'VsWebsocket/1.3.0'
+            ],
+            $additional_headers
+        ) );
+        
+        $this->connection->send( Message::toString( $response ) );
+        // $this->connection->close(); 
     }
 }
