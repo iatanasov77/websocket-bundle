@@ -46,6 +46,12 @@ trait ReactFunctions
         Async\await( $promise );
     }
     
+    public function setEngineRolledAction( WebsocketClientInterface $client ): void
+    {
+        $promise = $this->ReactAsync( [$this, 'sendRolledAction'], $client );
+        Async\await( $promise );
+    }
+    
     public function ReactAsync( callable $function, ...$args ): Promise
     {
         $promise = Async\async( function () use ( $function, $args ) {
@@ -53,5 +59,10 @@ trait ReactFunctions
         })();
         
         return $promise;
+    }
+    
+    public function ReactAsyncDelay( float $seconds ): void
+    {
+        Async\delay( $seconds );
     }
 }
