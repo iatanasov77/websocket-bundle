@@ -1,3 +1,9 @@
+1.3.3	|	Release date: **19.10.2026**
+============================================
+* New Features:
+  - Improve WebsocketSwooleClient .
+
+
 1.3.2	|	Release date: **19.10.2026**
 ============================================
 * New Features:
