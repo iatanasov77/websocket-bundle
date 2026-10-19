@@ -49,29 +49,25 @@ trait ReactFunctions
     
     public function setReactConnectAiOpponent( WebsocketClientInterface $socket ): void
     {
-        $promise = $this->ReactAsync( [$this, 'ConnectAiOpponent'], $socket );
-        Async\await( $promise );
+        $this->ReactAsync( [$this, 'ConnectAiOpponent'], $socket );
     }
     
     public function setReactNewTurn( WebsocketClientInterface $socket ): void
     {
-        $promise = $this->ReactAsync( [$this, 'NewTurn'], $socket );
-        Async\await( $promise );
+        $this->ReactAsync( [$this, 'NewTurn'], $socket );
     }
     
     public function setEngineRolledAction( WebsocketClientInterface $client ): void
     {
-        $promise = $this->ReactAsync( [$this, 'sendRolledAction'], $client );
-        Async\await( $promise );
+        $this->ReactAsync( [$this, 'sendRolledAction'], $client );
     }
     
-    public function ReactAsync( callable $function, $args ): Promise
+    public function ReactAsync( callable $function, $args ): void
     {
         $promise = Async\async( function () use ( $function, $args ) {
             \call_user_func( $function, $args );
         })();
-        
-        return $promise;
+        Async\await( $promise );
     }
     
     public function ReactAsyncDelay( float $seconds ): void
