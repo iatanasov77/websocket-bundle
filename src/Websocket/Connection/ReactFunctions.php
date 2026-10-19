@@ -34,6 +34,15 @@ trait ReactFunctions
         }
     }
     
+    public function addEngineMove( WebsocketClientInterface $client, $move, &$noMoves ): void
+    {
+        $promise = Async\async( function () use ( $client, $move, &$noMoves ) {
+            \call_user_func( [$this, 'sendEngineMove'], $client, $move, $noMoves );
+        })();
+        
+        return $promise;
+    }
+    
     public function setReactConnectAiOpponent( WebsocketClientInterface $socket ): void
     {
         $promise = $this->ReactAsync( [$this, 'ConnectAiOpponent'], $socket );
