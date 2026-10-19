@@ -1,3 +1,10 @@
+1.3.2	|	Release date: **19.10.2026**
+============================================
+* New Features:
+  - Create SwooleFunctions Trait.
+  - Create a Trait used React and Amp.
+
+
 1.3.1	|	Release date: **19.10.2026**
 ============================================
 * New Features:
