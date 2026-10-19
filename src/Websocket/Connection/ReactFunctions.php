@@ -71,6 +71,20 @@ trait ReactFunctions
         Async\await( $promise );
     }
     
+    public function setEngineBid( WebsocketClientInterface $client, $engineBid, $bidDto, $playerCards ): void
+    {
+        $promise = Async\async( function () use ( $client, $engineBid, $bidDto, $playerCards ) {
+            $parameters = [
+                $client,
+                $engineBid,
+                $bidDto,
+                $bidDto
+            ];
+            \call_user_func_array( [$this, 'sendEngineBid'], $parameters );
+        })();
+        Async\await( $promise );
+    }
+    
     public function setReactConnectAiOpponent( WebsocketClientInterface $socket ): void
     {
         $this->ReactAsync( [$this, 'ConnectAiOpponent'], $socket );
