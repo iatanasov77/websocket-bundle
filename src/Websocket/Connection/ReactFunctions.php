@@ -39,8 +39,7 @@ trait ReactFunctions
         $promise = Async\async( function () use ( $client, $move, &$noMoves ) {
             \call_user_func( [$this, 'sendEngineMove'], $client, $move, $noMoves );
         })();
-        
-        return $promise;
+        Async\await( $promise );
     }
     
     public function setReactConnectAiOpponent( WebsocketClientInterface $socket ): void
