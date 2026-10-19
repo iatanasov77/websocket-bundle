@@ -78,4 +78,12 @@ trait ReactFunctions
     {
         Async\delay( $seconds );
     }
+    
+    public function ReactAsyncDelayAwait(  float $seconds  ): void
+    {
+        $promise = Async\async( function () use ( $seconds )  {
+            Async\delay( $seconds );
+        })();
+        Async\await( $promise );
+    }
 }
