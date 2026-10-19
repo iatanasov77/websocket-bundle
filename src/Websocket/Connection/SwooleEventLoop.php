@@ -1,4 +1,4 @@
-<?php
+<?php namespace Vankosoft\WebsocketBundle\Websocket\Connection;
 
 use Swoole\Coroutine;
 use Swoole\Coroutine\Channel;
