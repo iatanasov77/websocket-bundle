@@ -37,7 +37,12 @@ trait ReactFunctions
     public function addEngineMove( WebsocketClientInterface $client, $move, &$noMoves ): void
     {
         $promise = Async\async( function () use ( $client, $move, &$noMoves ) {
-            \call_user_func( [$this, 'sendEngineMove'], $client, $move, $noMoves );
+            $parameters = [
+                $client,
+                $move,
+                &$noMoves
+            ];
+            \call_user_func_array( [$this, 'sendEngineMove'], $parameters );
         })();
         Async\await( $promise );
     }
