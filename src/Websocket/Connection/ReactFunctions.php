@@ -10,16 +10,13 @@ use Vankosoft\WebsocketBundle\Websocket\Client\WebsocketClientInterface;
 
 trait ReactFunctions
 {
-    /**
-     * CancellationTokenSource has been renamed to DeferredCancellation in AMPHP Version 3.0.0
-     *
-     * @var DeferredCancellation
-     */
-    protected $moveTimeOut;
-    
     public function setReactMoveTimeOut(): void
     {
+        /**
+         * CancellationTokenSource has been renamed to DeferredCancellation in AMPHP Version 3.0.0
+         */
         $this->moveTimeOut = new DeferredCancellation();
+        
         if ( $this->EndGameOnTotalThinkTimeElapse ) {
             Async\async( function () {
                 $loop = Loop::get();
@@ -32,6 +29,11 @@ trait ReactFunctions
                 });
             })();
         }
+    }
+    
+    public function setTimeTickMovesTimeOut(): void
+    {
+        
     }
     
     public function setEngineMove( WebsocketClientInterface $client, $move, &$noMoves ): void
