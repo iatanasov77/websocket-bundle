@@ -34,9 +34,9 @@ trait ReactFunctions
         }
     }
     
-    public function setReactConnectAiOpponent(): void
+    public function setReactConnectAiOpponent( WebsocketClientInterface $socket ): void
     {
-        $promise = $this->ReactAsync( [$this, 'ConnectAiOpponent'] );
+        $promise = $this->ReactAsync( [$this, 'ConnectAiOpponent'], $socket );
         Async\await( $promise );
     }
     
