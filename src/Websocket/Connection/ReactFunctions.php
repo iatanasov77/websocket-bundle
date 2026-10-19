@@ -31,9 +31,14 @@ trait ReactFunctions
         }
     }
     
-    public function setTimeTickMovesTimeOut(): void
+    public function setReactTimeTickMovesTimeOut(): void
     {
+        $this->moveTimeOutMoves = new DeferredCancellation();
+    }
         
+    public function setReactTimeTickDepthTimeOut(): void
+    {
+        $this->moveTimeOutDepth = new DeferredCancellation();
     }
     
     public function setEngineMove( WebsocketClientInterface $client, $move, &$noMoves ): void
