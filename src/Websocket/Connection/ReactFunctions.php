@@ -47,6 +47,18 @@ trait ReactFunctions
         Async\await( $promise );
     }
     
+    public function setChessEngineMove( WebsocketClientInterface $client, $move ): void
+    {
+        $promise = Async\async( function () use ( $client, $move, &$noMoves ) {
+            $parameters = [
+                $client,
+                $move
+            ];
+            \call_user_func_array( [$this, 'sendEngineMove'], $parameters );
+        })();
+        Async\await( $promise );
+    }
+    
     public function setEnginePlayCard( WebsocketClientInterface $client, $playCardAction ): void
     {
         $promise = Async\async( function () use ( $client, $playCardAction ) {
