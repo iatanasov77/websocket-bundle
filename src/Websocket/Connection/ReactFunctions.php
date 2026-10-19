@@ -78,7 +78,7 @@ trait ReactFunctions
                 $client,
                 $engineBid,
                 $bidDto,
-                $bidDto
+                $playerCards
             ];
             \call_user_func_array( [$this, 'sendEngineBid'], $parameters );
         })();
