@@ -1,3 +1,13 @@
+1.3.1	|	Release date: **19.10.2026**
+============================================
+* New Features:
+  - Fix Deprecated Use of React EventLoop Factory.
+  - Update WebsocketSwooleClient .
+  - Improve Swoole Client Close Action.
+  - Create a Trait for MoveTimeOut used React and Amp.
+  - Create a Trait used React and Amp.
+
+
 1.3.0	|	Release date: **15.10.2026**
 ============================================
 * New Features:

@@ -24,5 +24,11 @@
         
         "swoole-bundle/swoole-bundle": "^0.35"
     },
+    "suggest": {
+        "cboden/ratchet": "Required this for use RatchetConnection.",
+        "react/react": "Required this for use Async Operations.",
+        "react/partial": "Required this for use Async Operations.",
+        "amphp/amp": "Required this for use DeferredCancellation."
+    },
     "minimum-stability" : "dev"
 }
