@@ -54,6 +54,8 @@ final class WebsocketSwooleClient extends AbstractWebsocketClient
                     // 1000 е стандартен статус код за нормално затваряне (Normal Closure)
                     $this->connection->disconnect( $fd, $code, "Ти поиска да бъдеш изключен." );
                     return;
+                } else {
+                    $this->connection->close( $fd );
                 }
             }
         }
