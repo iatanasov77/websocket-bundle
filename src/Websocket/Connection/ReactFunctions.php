@@ -34,7 +34,7 @@ trait ReactFunctions
         }
     }
     
-    public function addEngineMove( WebsocketClientInterface $client, $move, &$noMoves ): void
+    public function setEngineMove( WebsocketClientInterface $client, $move, &$noMoves ): void
     {
         $promise = Async\async( function () use ( $client, $move, &$noMoves ) {
             $parameters = [
@@ -43,6 +43,18 @@ trait ReactFunctions
                 &$noMoves
             ];
             \call_user_func_array( [$this, 'sendEngineMove'], $parameters );
+        })();
+        Async\await( $promise );
+    }
+    
+    public function setEnginePlayCard( WebsocketClientInterface $client, $playCardAction ): void
+    {
+        $promise = Async\async( function () use ( $client, $playCardAction ) {
+            $parameters = [
+                $client,
+                $playCardAction
+            ];
+            \call_user_func_array( [$this, 'EnginPlayCardAsync'], $parameters );
         })();
         Async\await( $promise );
     }
