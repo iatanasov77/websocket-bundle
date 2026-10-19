@@ -1,3 +1,9 @@
+1.3.4	|	Release date: **19.10.2026**
+============================================
+* New Features:
+  - Remove a Composer Suggestion.
+
+
 1.3.3	|	Release date: **19.10.2026**
 ============================================
 * New Features:
